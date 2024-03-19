@@ -14,7 +14,7 @@ print("ODB extraction")
 
 
 import math
-import numpy
+import numpy as np
 import os
 from odbAccess import *
 from abaqusConstants import *
@@ -40,7 +40,7 @@ E = 3.2e6
 Frame_Stiffness = (12 * E * Plate_thickess * (thickness_main) ** 3) / (
     12 * (length) ** 3 * (math.cos(angle * math.pi / 180)) ** 2)
 Number_K = 50.0
-K_range = numpy.arange(
+K_range = np.arange(
     Frame_Stiffness * 54.0 / Number_K, Frame_Stiffness * 1.3, Frame_Stiffness / Number_K
 )
 for Negative_Stiffness in K_range:

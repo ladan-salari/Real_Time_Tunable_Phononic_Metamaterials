@@ -21,21 +21,12 @@ from sketch import *
 from abaqusConstants import *
 from caeModules import *
 from interaction import *
-import interaction
-import math
-import part
-import mesh
-import copy
-import re
-import decimal
+from section import *
+from connectorBehavior import *
+
 import math
 import os
-import numpy
 import numpy as np
-import section
-from connectorBehavior import *
-from operator import itemgetter
-
 
 # --------------------------------------------------------------
 # MODEL PARAMETERS
@@ -187,7 +178,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
     center_axi = p.DatumAxisByParToEdge(
         edge=p.datums[Z_axi], point=(Square + Gap + Radious, Square / 2.0, 0.0)
     ).id
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         math.pi / number_of_Neg_st_element,
         math.pi / 2.0,
         math.pi / number_of_Neg_st_element,
@@ -279,7 +270,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
     center_axi = p.DatumAxisByParToEdge(
         edge=p.datums[Z_axi], point=(Square / 2.0, Square + Gap + Radious, 0.0)
     ).id
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         math.pi / number_of_Neg_st_element,
         math.pi / 2.0,
         math.pi / number_of_Neg_st_element,
@@ -462,7 +453,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
     ## Define Constrain between edges and middle node and Ref nodes
     ##--------------------------------------------------------------
     # Top Vertex Real Part Top Circle
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         0.0, math.pi, math.pi / number_of_Neg_st_element
     ).tolist()
     vertex_1_Top_C = []
@@ -477,7 +468,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
             )
         )
     # Bottom Vertex Real Part
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         math.pi / number_of_Neg_st_element,
         math.pi + math.pi / number_of_Neg_st_element,
         math.pi / number_of_Neg_st_element,
@@ -495,7 +486,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
         )
 
     # Top Vertex Imag Part Top Circle
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         0.0, math.pi, math.pi / number_of_Neg_st_element
     ).tolist()
     vertex_3_Top_C = []
@@ -510,7 +501,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
             )
         )
     # Bottom Vertex Imag Part
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         math.pi / number_of_Neg_st_element,
         math.pi + math.pi / number_of_Neg_st_element,
         math.pi / number_of_Neg_st_element,
@@ -528,7 +519,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
         )
 
     # Top Vertex Real Part Bottom Circle
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         0.0, math.pi, math.pi / number_of_Neg_st_element
     ).tolist()
     vertex_1_Bottom_C = []
@@ -543,7 +534,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
             )
         )
     # Bottom Vertex Real Part
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         math.pi / number_of_Neg_st_element,
         math.pi + math.pi / number_of_Neg_st_element,
         math.pi / number_of_Neg_st_element,
@@ -561,7 +552,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
         )
 
     # Top Vertex Imag Part Bottom Circle
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         0.0, math.pi, math.pi / number_of_Neg_st_element
     ).tolist()
     vertex_3_Bottom_C = []
@@ -576,7 +567,7 @@ def Model_without_Bloch_BC(Negative_Stiffness):
             )
         )
     # Bottom Vertex Imag Part
-    angle_steps = numpy.arange(
+    angle_steps = np.arange(
         math.pi / number_of_Neg_st_element,
         math.pi + math.pi / number_of_Neg_st_element,
         math.pi / number_of_Neg_st_element,
@@ -796,7 +787,7 @@ mdb.models["Model-1"].sections["Negative_conector"].setValues(behaviorOptions=(s
 ##--------------------------------------------------------------
 ## Define Equation connector
 ##--------------------------------------------------------------
-my_steps = numpy.arange(0.0, 1.04, Step_size).tolist()
+my_steps = np.arange(0.0, 1.04, Step_size).tolist()
 for index_x in my_steps:
     for i in mylist_1:
         mdb.models["Model-1"].Equation(
@@ -900,7 +891,7 @@ for index_x in my_steps:
 ###--------------------------------------------------------------
 #### Define Equation connector
 ###--------------------------------------------------------------
-my_steps2 = numpy.arange(0.0, 1.04, Step_size).tolist()
+my_steps2 = np.arange(0.0, 1.04, Step_size).tolist()
 for index_y in my_steps2:
     for i in mylist_1:
         mdb.models["Model-1"].Equation(
@@ -1004,7 +995,7 @@ for index_y in my_steps2:
 ####--------------------------------------------------------------
 ### Define Equation connector
 ###--------------------------------------------------------------
-my_steps3 = numpy.arange(0.0, 1.04, Step_size).tolist()
+my_steps3 = np.arange(0.0, 1.04, Step_size).tolist()
 for index_z in my_steps3:
     for i in mylist_1:
         mdb.models["Model-1"].Equation(

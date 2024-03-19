@@ -7,10 +7,9 @@
 # -----------------------------------------------------------------------
 # -----------------------------------------------------------------------
 import math
-import numpy
+import numpy as np
 import decimal
 import os
-
 
 # find the range of stiffness for this model
 E = 3.2e6
@@ -22,7 +21,7 @@ Frame_Stiffness = (E * Plate_thickess * (thickness_main) ** 3.0) / (
     (length) ** 3 * (math.cos(angle * math.pi / 180)) ** 2
 )
 Number_K = 50.0
-K_range = numpy.arange(0.0, Frame_Stiffness * 1.2, Frame_Stiffness / Number_K)
+K_range = np.arange(0.0, Frame_Stiffness * 1.2, Frame_Stiffness / Number_K)
 for Negative_Stiffness in K_range:
     directory = "/share/amg/lsalaris/Brelium_Zone/Experiment_Magnet_Acrylic/With_wings_length_thickness_2times_shorter_wings_thicker_wings_25mm/Smaller_Step_size/k_"
     New_folder = directory + str(Negative_Stiffness)

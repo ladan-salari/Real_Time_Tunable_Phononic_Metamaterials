@@ -22,21 +22,12 @@ from sketch import *
 from abaqusConstants import *
 from caeModules import *
 from interaction import *
-import interaction
-import math
-import part
-import mesh
-import copy
-import re
-import decimal
+from connectorBehavior import *
+from section import *
+
 import math
 import os
-import numpy
 import numpy as np
-import section
-from connectorBehavior import *
-from operator import itemgetter
-
 
 # --------------------------------------------------------------
 # MODEL PARAMETERS
@@ -1205,7 +1196,7 @@ Frame_Stiffness = (12 * E * Plate_thickess * (thickness_main) ** 3) / (
     12 * (length) ** 3 * (math.cos(angle * math.pi / 180)) ** 2
 )
 Number_K = 50.0
-K_range = numpy.arange(
+K_range = np.arange(
     Frame_Stiffness * 25.0 / Number_K, Frame_Stiffness * 1.3, Frame_Stiffness / Number_K
 )
 Negative_Stiffness = 0.0
@@ -1241,7 +1232,7 @@ for Negative_Stiffness in K_range:
     # --------------------------------------------------------------
     # Define Equation connector
     # --------------------------------------------------------------
-    my_steps = numpy.arange(0.0, 1.02, Step_size).tolist()
+    my_steps = np.arange(0.0, 1.02, Step_size).tolist()
     for index_x in my_steps:
         for i in mylist:
             mdb.models["Model-1"].Equation(
@@ -1433,7 +1424,7 @@ for Negative_Stiffness in K_range:
     # --------------------------------------------------------------
     # Define Equation connector
     # --------------------------------------------------------------
-    my_steps2 = numpy.arange(0.0, 1.02, Step_size).tolist()
+    my_steps2 = np.arange(0.0, 1.02, Step_size).tolist()
     for index_y in my_steps2:
         for i in mylist:
             mdb.models["Model-1"].Equation(
@@ -1626,7 +1617,7 @@ for Negative_Stiffness in K_range:
     # --------------------------------------------------------------
     # Define Equation connector
     # --------------------------------------------------------------
-    my_steps3 = numpy.arange(0.0, 1.02, Step_size).tolist()
+    my_steps3 = np.arange(0.0, 1.02, Step_size).tolist()
     for index_z in my_steps3:
         for i in mylist:
             mdb.models["Model-1"].Equation(

@@ -22,20 +22,12 @@ from sketch import *
 from abaqusConstants import *
 from caeModules import *
 from interaction import *
-import interaction
-import math
-import part
-import mesh
-import copy
-import re
-import decimal
+from connectorBehavior import *
+from section import *
+
 import math
 import os
-import numpy
 import numpy as np
-import section
-from connectorBehavior import *
-from operator import itemgetter
 
 # --------------------------------------------------------------
 # MODEL PARAMETERS
@@ -655,7 +647,7 @@ Frame_Stiffness = (E * Plate_thickess * (thickness_main) ** 3.0) / (
     (length) ** 3 * (math.cos(angle * math.pi / 180)) ** 2
 )
 Number_K = 3.0
-K_range = numpy.arange(0.0, Frame_Stiffness * 1.5, Frame_Stiffness / Number_K)
+K_range = np.arange(0.0, Frame_Stiffness * 1.5, Frame_Stiffness / Number_K)
 Negative_Stiffness = 0.0
 mylist = Model_without_Bloch_BC(Negative_Stiffness)
 for Negative_Stiffness in K_range:
@@ -689,7 +681,7 @@ for Negative_Stiffness in K_range:
     # --------------------------------------------------------------
     # Define Equation connector
     # --------------------------------------------------------------
-    my_steps = numpy.arange(0.0, 1.01, Step_size).tolist()
+    my_steps = np.arange(0.0, 1.01, Step_size).tolist()
     for index_y in my_steps:
         for i in mylist:
             mdb.models["Model-1"].Equation(

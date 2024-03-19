@@ -16,7 +16,6 @@ from abaqusConstants import *
 from odbMaterial import *
 from odbSection import *
 import math
-import numpy
 import os
 
 # The number of the steps
